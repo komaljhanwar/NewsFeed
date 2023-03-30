@@ -1,12 +1,12 @@
 package com.demo.news.feed.service.impl;
 
 import com.demo.news.feed.Event;
-import com.demo.news.feed.GenericEvent;
 import com.demo.news.feed.Publisher;
 import com.demo.news.feed.TopicSubscriber;
 import com.demo.news.feed.listener.EventListener;
 import com.demo.news.feed.service.interfaces.INotificationPublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +18,8 @@ public class NotificationPublisherService implements INotificationPublisherServi
     @Autowired
     Publisher publisher;
 
+    @Autowired
+    StringRedisTemplate redisTemplate;
     @Override
     public void publish(String topic) {
 

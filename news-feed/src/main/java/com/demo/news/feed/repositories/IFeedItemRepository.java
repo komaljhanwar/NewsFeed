@@ -1,9 +1,7 @@
 package com.demo.news.feed.repositories;
 
-import com.demo.news.feed.dto.PostAttribute;
-import com.demo.news.feed.entity.FeedItem;
+import com.demo.news.feed.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -11,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface IFeedItemRepository extends JpaRepository<FeedItem, UUID> {
+public interface IFeedItemRepository extends JpaRepository<Post, UUID> {
 
 
     /*@Query("select item.* from user_follower u left join feed_item item on u.user_id = item.user_id where u.follower_id =? " +
@@ -27,5 +25,5 @@ public interface IFeedItemRepository extends JpaRepository<FeedItem, UUID> {
 */
 
    // @Query(value = "Select user_id, content, content_type, latitude, longitude from feed_item where user_id IN :userId ", nativeQuery = true)
-    List<FeedItem> findByUserIdIn(Collection<Integer> userId);
+    List<Post> findByUserIdIn(Collection<Integer> userId);
 }

@@ -8,6 +8,7 @@ import com.demo.news.feed.service.interfaces.INotificationPublisherService;
 import com.demo.news.feed.service.interfaces.ITimelineService;
 import com.demo.news.feed.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +35,17 @@ public class NewsFeedController {
 
     Map<String, List<Consumer>> subscriber;
 
-    @PostMapping(value = "/createPost")
-    public ResponseEntity createPost(@RequestBody PostDetails body) {
+    @Autowired
+    StringRedisTemplate template;
+
+    @PostMapping(value = "/makePost")
+    public ResponseEntity makePost(@RequestBody PostDetails body) {
         SuccessFailureResponse response = userService.createPost(body);
         return new ResponseEntity(response, response.getHttpCode());
     }
 
-    @PostMapping(value = "/subscribe/{topic}")
-    public ResponseEntity subscribeToTopic(@PathVariable String topic) {
+    @PostMapping(value = "/subscribe/{userId}/{topic}")
+    public ResponseEntity subscribeToTopic(@PathVariable String userId, @PathVariable String topic) {
         notificationPublisherService.publish(topic);
 
         return new ResponseEntity(HttpStatus.OK);
@@ -61,7 +65,7 @@ public class NewsFeedController {
         return new ResponseEntity(response.getMessage(), response.getHttpCode());
     }
 
-    @GetMapping(value="/newsfeed/{latitude}/{longitude}/{id}")
+    @GetMapping(value="/newsfeed/{region}/{id}")
     public ResponseEntity getNewsFeedAroundLocation(@PathVariable String id, @PathVariable Double latitude,
                                                     @PathVariable Double longitude) {
         newsFeedService.getNewsFeedByLocation(latitude, longitude, id);

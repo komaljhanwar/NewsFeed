@@ -2,6 +2,7 @@ package com.demo.news.feed.ExceptionHandling;
 
 import com.demo.news.feed.enums.ErrorCode;
 import com.demo.news.feed.model.response.ErrorResponse;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -74,7 +75,7 @@ public class ControllerAdvisor{
 
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }*/
-    @ExceptionHandler(InternalServerErrorException.class)
+    @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<Object> handleInternalServerErrorException(Exception ex) {
         ErrorResponse response = new ErrorResponse();
         response.setErrorCode(ErrorCode.INTERNAL_SERVER_ERROR.getCode());

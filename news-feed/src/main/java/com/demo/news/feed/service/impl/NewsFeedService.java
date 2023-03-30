@@ -1,8 +1,7 @@
 package com.demo.news.feed.service.impl;
 
 
-import com.demo.news.feed.dto.PostAttribute;
-import com.demo.news.feed.entity.FeedItem;
+import com.demo.news.feed.entity.Post;
 import com.demo.news.feed.model.response.SuccessFailureResponse;
 import com.demo.news.feed.repositories.IFeedItemRepository;
 import com.demo.news.feed.repositories.IUserFollowerRepository;
@@ -29,21 +28,18 @@ public class NewsFeedService implements INewsFeedService {
 
     @Override
     public SuccessFailureResponse getNewsFeed(String userId) {
-        List<FeedItem> list = new ArrayList<>();
+        SuccessFailureResponse response = null;
+        List<Post> list = new ArrayList<>();
         try {
             List<Integer> followerIdList = userFollowerRepository.findByUserId(Integer.valueOf(userId));
-            log.info(" folllower list" + followerIdList );
             list = feedItemRepository.findByUserIdIn(followerIdList);
-            log.info("  list" + list );
-
-
+            response = new SuccessFailureResponse();
+            response.setHttpCode(HttpStatus.OK);
+            response.setMessage(list);
+            response.setStatus(true);
         } catch (DataAccessException ex) {
             log.error("Failed while reading from db", ex);
         }
-        SuccessFailureResponse response = new SuccessFailureResponse();
-        response.setHttpCode(HttpStatus.OK);
-        response.setMessage(list);
-        response.setStatus(true);
         return  response;
     }
 

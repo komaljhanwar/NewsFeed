@@ -6,28 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
-
-import static jakarta.persistence.CascadeType.ALL;
 
 @Builder
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedItem {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "user_id")
     private Integer userId;
-    @Column(name = "feed_item_id")
+    @Column(name = "post_id")
     private int feedItemId;
     @Column(name = "content")
     private String content;
@@ -40,9 +34,4 @@ public class FeedItem {
     private LocalDateTime creationDate;
     @Column(name = "num_favourites")
     private Integer numFavourites;
-
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @Fetch(FetchMode.JOIN)
-    private User user;*/
 }

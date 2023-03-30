@@ -49,6 +49,7 @@ public class RedisConfiguration {
         return template;
     }
 
+
     /*@Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
