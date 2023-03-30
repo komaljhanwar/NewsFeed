@@ -1,0 +1,24 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4j/2.0/config"
+               status="warn" name="LogInterceptor">
+    <!-- Logging Properties -->
+    <Properties>
+        <Property name="LOG_PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %spi%n</Property>
+    </Properties>
+
+    <!-- Console Appenders -->
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <JsonLayout complete="false" compact="false" eventEol="true" stacktraceAsString="true"/>
+            <!-- <PatternLayout pattern="${LOG_PATTERN}"/> -->
+        </Console>
+    </Appenders>
+
+    <!-- Loggers -->
+    <loggers>
+        <root level="info">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </loggers>
+</configuration>
